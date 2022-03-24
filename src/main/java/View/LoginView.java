@@ -3,30 +3,22 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-public class Login extends JFrame{
+public class LoginView extends JFrame{
 
-    static JLabel titleLabel;
-    static JLabel usernameLabel;
-    static JLabel passwordLabel;
-    static JTextField usernameField;
-    static JPasswordField passwordField;
-    static JButton loginBt;
-    static JButton registerBt;
-
-    public static void LoginView() {
-        Login frame = new Login();
+    public static void ShowLoginView() {
+        LoginView frame = new LoginView();
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        titleLabel = new JLabel("Login Form");
+        JLabel titleLabel = new JLabel("Login");
         titleLabel.setForeground(Color.gray);
         titleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
 
-        usernameLabel = new JLabel("Username");
-        passwordLabel = new JLabel("Password");
-        usernameField = new JTextField();
-        passwordField = new JPasswordField();
-        loginBt = new JButton("Login");
-        registerBt = new JButton("Register");
+        JLabel usernameLabel = new JLabel("Username");
+        JLabel passwordLabel = new JLabel("Password");
+        JTextField usernameField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
+        JButton loginBt = new JButton("Login");
+        JButton registerBt = new JButton("Register");
 
         titleLabel.setBounds(120, 30, 400, 30);
         usernameLabel.setBounds(25, 70, 200, 30);
