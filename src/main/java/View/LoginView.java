@@ -28,6 +28,11 @@ public class LoginView extends JFrame{
         loginBt.setBounds(25, 160, 100, 30);
         registerBt.setBounds(200, 160, 100, 30);
 
+        registerBt.addActionListener(v->{
+            frame.setVisible(false);
+            RegisterView.ShowRegisterView();
+        });
+
         frame.add(titleLabel);
         frame.add(usernameLabel);
         frame.add(usernameField);
