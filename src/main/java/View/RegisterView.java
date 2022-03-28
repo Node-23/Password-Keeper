@@ -40,6 +40,11 @@ public class RegisterView {
         cancelBt.setBackground(Color.decode("#e61919"));
         cancelBt.setForeground(Color.white);
 
+        cancelBt.addActionListener(v->{
+            frame.setVisible(false);
+            LoginView.ShowLoginView();
+        });
+
         frame.add(titleLabel);
         frame.add(usernameLabel);
         frame.add(usernameField);
