@@ -1,7 +1,4 @@
-import View.CreatePasswordView;
-import View.HomeView;
-import View.LoginView;
-import View.RegisterView;
+import View.*;
 
 public class App {
     public static void main(String[] args) {
