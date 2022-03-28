@@ -3,10 +3,11 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-public class RegisterView {
+public class RegisterView extends JFrame{
 
     public static void ShowRegisterView() {
-        LoginView frame = new LoginView();
+        RegisterView frame = new RegisterView();
+        frame.setTitle("Register User");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel titleLabel = new JLabel("Register");

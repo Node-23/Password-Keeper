@@ -7,6 +7,7 @@ public class LoginView extends JFrame{
 
     public static void ShowLoginView() {
         LoginView frame = new LoginView();
+        frame.setTitle("Login");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel titleLabel = new JLabel("Login");
