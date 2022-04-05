@@ -5,6 +5,7 @@ import java.awt.*;
 
 public class CreatePasswordView extends JFrame {
 
+
     public static void ShowCreatePasswordView() {
         CreatePasswordView frame = new CreatePasswordView();
         frame.setTitle("Create Password");
@@ -18,7 +19,7 @@ public class CreatePasswordView extends JFrame {
         JLabel usernameLabel = new JLabel("Username");
         JLabel confirmPasswordLabel = new JLabel("Password");
         JTextField fromTextField = new JTextField();
-        JTextField usernameTextfield = new JTextField();
+        JTextField usernameTextField = new JTextField();
         JPasswordField passwordTextField = new JPasswordField();
         JButton registerBt = new JButton("Add");
         JButton cancelBt = new JButton("Cancel");
@@ -29,7 +30,7 @@ public class CreatePasswordView extends JFrame {
         confirmPasswordLabel.setBounds(25, 150, 200, 30);
 
         fromTextField.setBounds(100, 70, 200, 30);
-        usernameTextfield.setBounds(100, 110, 200, 30);
+        usernameTextField.setBounds(100, 110, 200, 30);
         passwordTextField.setBounds(100, 150, 200, 30);
 
         registerBt.setBounds(25, 200, 100, 30);
@@ -51,7 +52,7 @@ public class CreatePasswordView extends JFrame {
         frame.add(fromTextField);
         frame.add(usernameLabel);
         frame.add(confirmPasswordLabel);
-        frame.add(usernameTextfield);
+        frame.add(usernameTextField);
         frame.add(passwordTextField);
         frame.add(registerBt);
         frame.add(cancelBt);

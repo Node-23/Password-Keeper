@@ -41,6 +41,11 @@ public class RegisterView extends JFrame{
         cancelBt.setBackground(Color.decode("#e61919"));
         cancelBt.setForeground(Color.white);
 
+        registerBt.addActionListener(v->{
+            frame.setVisible(false);
+            LoginView.ShowLoginView();
+        });
+
         cancelBt.addActionListener(v->{
             frame.setVisible(false);
             LoginView.ShowLoginView();
