@@ -1,15 +1,16 @@
 package Service;
 
 import java.io.*;
+import java.util.Scanner;
 
 public class FIleIO {
     private static final String mainFolderPath = System.getProperty("user.home") +
             File.separator +
             "password_keeper" +
             File.separator;
-    private static final String configDataPath = mainFolderPath + "Config.txt";
+    private static final String configData = "Config.txt";
 
-    public static void SaveFile(String data, String filePath, String fileName){
+    private static void SaveFile(String data, String filePath, String fileName){
         CreateFolderIfNeeded(filePath);
         FileOutputStream outputStream = null;
         try {
@@ -26,30 +27,53 @@ public class FIleIO {
         }
     }
 
-    public static void ReadFile(String fileName){
+    private static String ReadFile(String fileName){
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(mainFolderPath + fileName));
-            String currentLine = reader.readLine();
-            System.out.println("READ: " + currentLine);
-        }catch (IOException e){
+            File file = new File(fileName);
+            Scanner reader = new Scanner(file);
+            StringBuilder data = new StringBuilder();
+            while (reader.hasNextLine()) {
+                data.append(reader.nextLine());
+            }
+            reader.close();
+            return data.toString();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: File not found");
             e.printStackTrace();
-            System.out.println("Error reading the file");
         }
+        return null;
     }
 
     private static void CreateFolderIfNeeded(String folderName){
-        File mainFolder = new File(folderName);
-        if(!mainFolder.exists()){
+        File folder = new File(folderName);
+        if(!folder.exists()){
             //TODO: Throws an custom exception
-            mainFolder.mkdirs();
+            if(!folder.mkdirs()){
+                System.out.println("Error creating folder");
+            }
         }
     }
 
-//    private static void CreateAppConfig(){
-//        CreateFolderIfNeeded(mainFolderPath);
-//        String data = "";
-//        SaveFile(data, mainFolderPath, "config");
-//        //File configFile = new File(configData);
-//    }
+    public static void CreateMainFolder(){
+        File mainFolder = new File(mainFolderPath);
+        if (mainFolder.exists()) return;
+        if(!mainFolder.mkdirs()){
+            System.out.println("Error creating main folder");
+        }
+    }
+
+    public static void CreateAppConfig(){
+        File configFile = new File(mainFolderPath + configData);
+        if (configFile.exists()) return;
+        String data = "";
+        SaveFile(data, mainFolderPath, configData);
+        //File configFile = new File(configData);
+    }
+
+    public static void addUserDataInConfig(String username, String password){
+        String data = ReadFile(mainFolderPath + configData);
+        data += username + "-" + password + "\n";
+        SaveFile(data, mainFolderPath, configData);
+    }
 
 }

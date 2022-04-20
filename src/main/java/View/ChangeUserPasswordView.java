@@ -52,6 +52,7 @@ public class ChangeUserPasswordView extends JFrame {
 
         frame.setSize(350, 250);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }

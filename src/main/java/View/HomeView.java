@@ -52,6 +52,7 @@ public class HomeView extends JFrame{
 
         frame.setSize(600, 600);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 

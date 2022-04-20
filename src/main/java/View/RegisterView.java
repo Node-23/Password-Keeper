@@ -1,7 +1,10 @@
 package View;
 
+import Controller.RegisterController;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class RegisterView extends JFrame{
 
@@ -42,8 +45,16 @@ public class RegisterView extends JFrame{
         cancelBt.setForeground(Color.white);
 
         registerBt.addActionListener(v->{
-            frame.setVisible(false);
-            LoginView.ShowLoginView();
+            boolean sucess = RegisterController.RegisterUser(
+                    usernameField.getText().trim(),
+                    String.valueOf(passwordField.getPassword()),
+                    String.valueOf(confirmPasswordField.getPassword())
+            );
+            if(sucess){
+                usernameField.setText("");
+                passwordField.setText("");
+                confirmPasswordField.setText("");
+            }
         });
 
         cancelBt.addActionListener(v->{
@@ -63,6 +74,9 @@ public class RegisterView extends JFrame{
 
         frame.setSize(350, 300);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+
 }
