@@ -58,6 +58,7 @@ public class EditPasswordView extends JFrame {
 
         frame.setSize(350, 300);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 }
