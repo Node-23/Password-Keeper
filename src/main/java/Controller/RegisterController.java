@@ -2,6 +2,7 @@ package Controller;
 
 import Model.User;
 import Service.FIleIO;
+import Service.Popups;
 
 import javax.swing.*;
 
@@ -16,30 +17,20 @@ public class RegisterController {
     public static boolean RegisterUser(String name, String password, String confirmPassword){
         if(!ValidateUserData(name, password, confirmPassword)) return false;
         User user = new User(name, password);
-        FIleIO.addUserDataInConfig(user.getUsername(), user.getPassword());
+        FIleIO.AddUserDataInConfig(user.getUsername(), user.getPassword());
         return true;
     }
 
     protected static boolean ValidateUserData(String name, String password, String confirmPassword){
         if(name.isBlank() || password.isEmpty() || confirmPassword.isEmpty()) {
-            RegisterMessage(emptyFieldErrorMessage, 0);
+            Popups.ShowPopup(emptyFieldErrorMessage, JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if(!password.equals(confirmPassword)){
-            RegisterMessage(passwordNotMatchErrorMessage, 0);
+            Popups.ShowPopup(passwordNotMatchErrorMessage, JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        RegisterMessage(successMessage, 1);
+        Popups.ShowPopup(successMessage, JOptionPane.PLAIN_MESSAGE);
         return true;
-    }
-    private static void RegisterMessage(String message, int messageType){
-        //messageType = 0 -> Error message
-        //messageType = 1 -> Plain message
-        JOptionPane.showMessageDialog(
-                null,
-                message,
-                "Validation error",
-                messageType
-        );
     }
 }

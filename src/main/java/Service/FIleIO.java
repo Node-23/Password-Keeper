@@ -1,6 +1,9 @@
 package Service;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class FIleIO {
@@ -33,7 +36,7 @@ public class FIleIO {
             Scanner reader = new Scanner(file);
             StringBuilder data = new StringBuilder();
             while (reader.hasNextLine()) {
-                data.append(reader.nextLine());
+                data.append(reader.nextLine()).append("\n");
             }
             reader.close();
             return data.toString();
@@ -70,10 +73,15 @@ public class FIleIO {
         //File configFile = new File(configData);
     }
 
-    public static void addUserDataInConfig(String username, String password){
+    public static void AddUserDataInConfig(String username, String password){
         String data = ReadFile(mainFolderPath + configData);
-        data += username + "-" + password + "\n";
+        data += username + "-" + password;
         SaveFile(data, mainFolderPath, configData);
+    }
+
+    public static ArrayList<String> GetUsersData(){
+        String[] data = Objects.requireNonNull(ReadFile(mainFolderPath + configData)).split("\n");
+        return new ArrayList<>(Arrays.asList(data));
     }
 
 }
