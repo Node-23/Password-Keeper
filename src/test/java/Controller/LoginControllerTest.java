@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class LoginControllerTest {
     @Test
     void validateLoginPositiveTest() {
-        User testUser = new User("test", "123");
+        User testUser = new User("default", "123456");
         boolean result = LoginController.ValidateLogin(testUser);
         assertTrue(result);
     }

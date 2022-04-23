@@ -2,35 +2,41 @@ package Controller;
 
 import Model.User;
 import Service.FIleIO;
+import Service.Messages;
 import Service.Popups;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class RegisterController {
-    private static final String emptyFieldErrorMessage = "All fields must be filled";
-    private static final String passwordNotMatchErrorMessage = "Passwords not match";
-    private static final String successMessage = "User created";
-
-        //TODO: Encrypt data with md5
-        //TODO: Save file in the SO
-
-    public static boolean RegisterUser(String name, String password, String confirmPassword){
-        if(!ValidateUserData(name, password, confirmPassword)) return false;
-        User user = new User(name, password);
+    private static final int minimumFieldLength = 6;
+    public static boolean RegisterUser(String userName, String password, String confirmPassword){
+        String validateMessage = ValidUser(userName, password, confirmPassword);
+        if(!validateMessage.equals(Messages.successMessage)){
+            Popups.ShowPopup(validateMessage, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        User user = new User(userName, password);
         FIleIO.AddUserDataInConfig(user.getUsername(), user.getPassword());
+        Popups.ShowPopup(validateMessage, JOptionPane.PLAIN_MESSAGE);
         return true;
     }
 
-    protected static boolean ValidateUserData(String name, String password, String confirmPassword){
-        if(name.isBlank() || password.isEmpty() || confirmPassword.isEmpty()) {
-            Popups.ShowPopup(emptyFieldErrorMessage, JOptionPane.ERROR_MESSAGE);
-            return false;
+    protected static String ValidUser(String userName, String password, String confirmPassword){
+        if(userName.length() < minimumFieldLength || password.length() < minimumFieldLength || confirmPassword.length() < minimumFieldLength){
+            return Messages.fieldLengthErrorMessage;
         }
         if(!password.equals(confirmPassword)){
-            Popups.ShowPopup(passwordNotMatchErrorMessage, JOptionPane.ERROR_MESSAGE);
-            return false;
+            return Messages.passwordNotMatchErrorMessage;
         }
-        Popups.ShowPopup(successMessage, JOptionPane.PLAIN_MESSAGE);
-        return true;
+        if(UserAlreadyExists(userName)){
+            return Messages.usernameAlreadyExistsErrorMessage;
+        }
+        return Messages.successMessage;
+    }
+
+    private static boolean UserAlreadyExists(String userName){
+        ArrayList<String> data = FIleIO.GetUsersData();
+        return data.stream().anyMatch(d -> d.split("-")[0].equals(userName));
     }
 }

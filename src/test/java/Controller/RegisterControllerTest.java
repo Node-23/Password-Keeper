@@ -1,5 +1,6 @@
 package Controller;
 
+import Service.Messages;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,22 +8,42 @@ import static org.junit.jupiter.api.Assertions.*;
 class RegisterControllerTest {
 
     @Test
-    void validateUserDataPositiveTest() {
-        boolean positiveAnswer = RegisterController.ValidateUserData(
+    void validUserPositiveTest() {
+        String positiveAnswer = RegisterController.ValidUser(
                 "Joaquim José",
                 "joca123",
                 "joca123"
         );
-        assertTrue(positiveAnswer);
+        assertEquals(Messages.successMessage,positiveAnswer);
     }
 
     @Test
-    void validateUserDataNegativeTest() {
-        boolean positiveAnswer = RegisterController.ValidateUserData(
+    void validUserPassNotMatchTest() {
+        String answer = RegisterController.ValidUser(
+                "Joaquim José",
+                "joca123",
+                "joao567"
+        );
+        assertEquals(Messages.passwordNotMatchErrorMessage,answer);
+    }
+
+    @Test
+    void validUserLengthTest() {
+        String answer = RegisterController.ValidUser(
                 "Joaquim José",
                 "joca",
-                "joca123"
+                "joca"
         );
-        assertFalse(positiveAnswer);
+        assertEquals(Messages.fieldLengthErrorMessage,answer);
+    }
+
+    @Test
+    void validUserAlreadyRegisteredUserTest() {
+        String answer = RegisterController.ValidUser(
+                "default",
+                "default123",
+                "default123"
+        );
+        assertEquals(Messages.usernameAlreadyExistsErrorMessage,answer);
     }
 }

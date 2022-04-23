@@ -50,7 +50,6 @@ public class FIleIO {
     private static void CreateFolderIfNeeded(String folderName){
         File folder = new File(folderName);
         if(!folder.exists()){
-            //TODO: Throws an custom exception
             if(!folder.mkdirs()){
                 System.out.println("Error creating folder");
             }
