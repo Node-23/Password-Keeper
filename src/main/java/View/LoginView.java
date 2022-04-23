@@ -2,10 +2,13 @@ package View;
 
 import Controller.LoginController;
 import Model.User;
+import Service.Messages;
 import Service.Popups;
 
 import javax.swing.*;
 import java.awt.*;
+
+import static Service.Messages.loginErrorMessage;
 
 public class LoginView extends JFrame{
     private static final String EmptyFieldErrorMessage = "All fields must be filled";
@@ -45,7 +48,10 @@ public class LoginView extends JFrame{
                 return;
             }
             User user = new User(usernameField.getText(), String.valueOf(passwordField.getPassword()));
-            if(!LoginController.ValidateLogin(user)) return;
+            if(!LoginController.ValidateLogin(user)) {
+                Popups.ShowPopup(Messages.loginErrorMessage, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
             frame.setVisible(false);
             HomeView.ShowHomeView();
         });
