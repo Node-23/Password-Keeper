@@ -45,12 +45,12 @@ public class RegisterView extends JFrame{
         cancelBt.setForeground(Color.white);
 
         registerBt.addActionListener(v->{
-            boolean sucess = RegisterController.RegisterUser(
+            boolean success = RegisterController.RegisterUser(
                     usernameField.getText().trim(),
                     String.valueOf(passwordField.getPassword()),
                     String.valueOf(confirmPasswordField.getPassword())
             );
-            if(sucess){
+            if(success){
                 usernameField.setText("");
                 passwordField.setText("");
                 confirmPasswordField.setText("");

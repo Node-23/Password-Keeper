@@ -1,16 +1,19 @@
 package View;
 
+import Controller.CreatePasswordController;
+import Model.Password;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class CreatePasswordView extends JFrame {
 
 
-    public static void ShowCreatePasswordView() {
+    public static void ShowCreatePasswordView(String username, HomeView homeView) {
         CreatePasswordView frame = new CreatePasswordView();
         frame.setTitle("Create Password");
         frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         JLabel titleLabel = new JLabel("Add Password");
         titleLabel.setForeground(Color.gray);
         titleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
@@ -42,9 +45,17 @@ public class CreatePasswordView extends JFrame {
         cancelBt.setBackground(Color.decode("#e61919"));
         cancelBt.setForeground(Color.white);
 
+        registerBt.addActionListener(v -> {
+            Password password = new Password(fromTextField.getText(), usernameTextField.getText(), String.valueOf(passwordTextField.getPassword()));
+            if(CreatePasswordController.AddUserData(username, password)){
+                frame.setVisible(false);
+                HomeView.ShowHomeView(username);
+            }
+        });
+
         cancelBt.addActionListener(v->{
             frame.setVisible(false);
-            HomeView.ShowHomeView("test");
+            HomeView.ShowHomeView(username);
         });
 
         frame.add(titleLabel);
