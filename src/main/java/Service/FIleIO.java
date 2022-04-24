@@ -1,5 +1,7 @@
 package Service;
 
+import Model.Password;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,6 +14,7 @@ public class FIleIO {
             "password_keeper" +
             File.separator;
     private static final String configData = "Config.txt";
+    private static final String userPasswordsFileName = "data.txt";
 
     private static void SaveFile(String data, String filePath, String fileName){
         CreateFolderIfNeeded(filePath);
@@ -42,7 +45,6 @@ public class FIleIO {
             return data.toString();
         } catch (FileNotFoundException e) {
             System.out.println("Error: File not found");
-            e.printStackTrace();
         }
         return null;
     }
@@ -81,6 +83,28 @@ public class FIleIO {
     public static ArrayList<String> GetUsersData(){
         String[] data = Objects.requireNonNull(ReadFile(mainFolderPath + configData)).split("\n");
         return new ArrayList<>(Arrays.asList(data));
+    }
+
+    public static void AddUserPassword(String username, Password pass){
+        String userFolder = mainFolderPath + File.separator + username;
+        String data = ReadFile(userFolder + File.separator + "data");
+        data += pass.getFrom() + "-" + pass.getUsername() + "-" + pass.getPassword();
+        SaveFile(data, userFolder, userPasswordsFileName);
+    }
+
+    public static ArrayList<Password> GetUserPasswords(String username){
+        try{
+        String[] stringData = ReadFile(mainFolderPath + username + File.separator + userPasswordsFileName).split("\n");
+        ArrayList<Password> data = new ArrayList<>();
+        Arrays.stream(stringData).forEach(sd -> {
+            Password pass = new Password(sd.split("-")[0], sd.split("-")[1], sd.split("-")[2]);
+            data.add(pass);
+        });
+        return data;
+
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

@@ -1,78 +1,124 @@
 package View;
 
+import Model.Password;
+import Model.User;
+import Service.FIleIO;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class HomeView extends JFrame{
 
-    public static void ShowHomeView() {
+    private static final String editButtonColor = "#f4c430";
+    private static final String deleteButtonColor = "#e32636";
+    private static final int fromXPosition = 10;
+    private static final int usernameXPosition = 120;
+    private static final int passwordXPosition = 365;
+    private static final int columnsLabelTextSize = 15;
+
+    public static void ShowHomeView(String username) {
         HomeView frame = new HomeView();
         frame.setTitle("Home");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Title label
-        JLabel titleLabel = new JLabel("Passwords");
+        JLabel titleLabel = new JLabel("- PASSWORDS LIST -");
         titleLabel.setForeground(Color.gray);
         titleLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
 
         //Columns label
-        JLabel fromLabel = new JLabel("From");
-        JLabel usernameLabel = new JLabel("Username");
-        JLabel passwordLabel = new JLabel("Password");
-        JLabel actionsLabel = new JLabel("Actions");
+        JLabel fromLabel = new JLabel("FROM");
+        fromLabel.setFont(new Font(Font.DIALOG, Font.BOLD, columnsLabelTextSize));
+        JLabel usernameLabel = new JLabel("USERNAME");
+        usernameLabel.setFont(new Font(Font.DIALOG, Font.BOLD, columnsLabelTextSize));
+        JLabel passwordLabel = new JLabel("PASSWORD");
+        passwordLabel.setFont(new Font(Font.DIALOG, Font.BOLD, columnsLabelTextSize));
 
         //MenuBar
         JMenuBar menuBar = new JMenuBar();
-        JMenu userMenu = new JMenu("User");
-        JMenuItem helpMenu = new JMenu("Help");
+        JMenu userMenu = new JMenu("USER");
+        JMenuItem helpMenu = new JMenu("HELP");
         menuBar.add(userMenu);
         menuBar.add(helpMenu);
-        JMenuItem changePassword = new JMenuItem("Change password");
+        JMenuItem addPassword = new JMenuItem("Add password");
+        JMenuItem changePassword = new JMenuItem("Change user password");
         JMenuItem logout = new JMenuItem("Logout");
+        userMenu.add(addPassword);
         userMenu.add(changePassword);
         userMenu.add(logout);
 
-
-
         //Set objects coordinates
-        titleLabel.setBounds(220, 15, 400, 30);
-        fromLabel.setBounds(20, 55, 200, 30);
-        usernameLabel.setBounds(150, 55, 200, 30);
-        passwordLabel.setBounds(350, 55, 200, 30);
-        actionsLabel.setBounds(500, 55, 200, 30);
+        titleLabel.setBounds(210, 15, 400, 30);
+        fromLabel.setBounds(fromXPosition, 55, 200, 30);
+        usernameLabel.setBounds(usernameXPosition, 55, 200, 30);
+        passwordLabel.setBounds(passwordXPosition, 55, 200, 30);
+
+        //Set Listeners
+        logout.addActionListener(v -> {frame.setVisible(false); LoginView.ShowLoginView();});
 
         frame.setJMenuBar(menuBar);
         frame.add(titleLabel);
         frame.add(fromLabel);
         frame.add(usernameLabel);
         frame.add(passwordLabel);
-        frame.add(actionsLabel);
-        setPasswordItems(frame);
 
-        frame.setSize(600, 600);
+        //setEachPasswordItems(frame, null);
+        GetAllUserPasswords(username, frame);
+
+        frame.setSize(650, 600);
         frame.setLayout(null);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
-    private static void setPasswordItems(HomeView frame){
-        //HERE WE WILL RECIVE A PASSWORD OBJECT AND SET IT ON THE FRAME
-        JLabel fromListLabel = new JLabel("Example");
-        JLabel usernameListLabel = new JLabel("ThisIsAnExample@example.com");
-        JLabel passwordListLabel = new JLabel("p@ssword");
-        String[] actions = {"Select action", "Edit", "Delete"};
-        JComboBox<String> actionsBox = new JComboBox<>(actions);
+    private static void setEachPasswordItems(HomeView frame, Password pass){
+        //HERE WE WILL RECEIVE A PASSWORD OBJECT AND SET IT ON THE FRAME
+        JLabel fromListLabel = new JLabel(pass.getFrom());
+        JLabel usernameListLabel = new JLabel(pass.getUsername());
+        JLabel passwordListLabel = new JLabel(pass.getPassword());
+        JButton editBt = new JButton("EDIT");
+        JButton deleteBt = new JButton("DELETE");
 
-        fromListLabel.setBounds(10, 90, 90, 30);
-        usernameListLabel.setBounds(120, 90, 200, 30);
-        passwordListLabel.setBounds(340, 90, 120, 30);
-        actionsBox.setBounds(480, 90, 100, 30);
-        actionsBox.setSelectedIndex(0);
-        //actionsBox.addActionListener((ActionListener) this);
+        fromListLabel.setBounds(fromXPosition, 90, 90, 30);
+        usernameListLabel.setBounds(usernameXPosition, 90, 200, 30);
+        passwordListLabel.setBounds(passwordXPosition, 90, 120, 30);
+
+        SetButtons(editBt, editButtonColor, 480, 60);
+        SetButtons(deleteBt, deleteButtonColor, 550, 75);
+
         frame.add(fromListLabel);
         frame.add(usernameListLabel);
         frame.add(passwordListLabel);
-        frame.add(actionsBox);
+        frame.add(editBt);
+        frame.add(deleteBt);
+    }
+
+    private static void SetButtons(JButton button, String buttonColor, int buttonXPosition, int buttonWidth){
+        button.setFont(new Font(Font.DIALOG, Font.BOLD, 10));
+        button.setBackground(Color.decode(buttonColor));
+        button.setFocusPainted(false);
+        button.setForeground(Color.WHITE);
+        button.setBounds(buttonXPosition, 90, buttonWidth, 30);
+
+        if(Objects.equals(button.getText(), "EDIT")){
+            button.addActionListener(v -> {
+                //TODO: Add the edit password action
+            });
+        }else{
+            button.addActionListener(v -> {
+                //TODO: Add the delete password action
+            });
+        }
+    }
+
+    private static void GetAllUserPasswords(String username, HomeView frame){
+        ArrayList<Password> data = FIleIO.GetUserPasswords(username);
+        if(data == null) return;
+        data.forEach(pass -> {
+            setEachPasswordItems(frame, pass);
+        });
     }
 }
