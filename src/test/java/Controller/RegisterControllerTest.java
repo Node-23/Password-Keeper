@@ -14,7 +14,7 @@ class RegisterControllerTest {
                 "joca123",
                 "joca123"
         );
-        assertEquals(Messages.successMessage,positiveAnswer);
+        assertEquals(Messages.loginSuccessMessage,positiveAnswer);
     }
 
     @Test

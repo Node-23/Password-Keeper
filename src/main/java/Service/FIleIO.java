@@ -20,7 +20,7 @@ public class FIleIO {
         CreateFolderIfNeeded(filePath);
         FileOutputStream outputStream = null;
         try {
-            outputStream = new FileOutputStream(filePath + fileName);
+            outputStream = new FileOutputStream(filePath + File.separator + fileName);
             byte[] strToBytes = data.getBytes();
             outputStream.write(strToBytes);
             outputStream.close();
@@ -45,8 +45,8 @@ public class FIleIO {
             return data.toString();
         } catch (FileNotFoundException e) {
             System.out.println("Error: File not found");
+            return null;
         }
-        return null;
     }
 
     private static void CreateFolderIfNeeded(String folderName){
@@ -86,8 +86,12 @@ public class FIleIO {
     }
 
     public static void AddUserPassword(String username, Password pass){
-        String userFolder = mainFolderPath + File.separator + username;
-        String data = ReadFile(userFolder + File.separator + "data");
+        String userFolder = mainFolderPath + username;
+        CreateFolderIfNeeded(userFolder);
+        String data = ReadFile(userFolder + File.separator +"data.txt");
+        if(data == null) {
+            data = "";
+        }
         data += pass.getFrom() + "-" + pass.getUsername() + "-" + pass.getPassword();
         SaveFile(data, userFolder, userPasswordsFileName);
     }

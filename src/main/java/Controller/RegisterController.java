@@ -12,7 +12,7 @@ public class RegisterController {
     private static final int minimumFieldLength = 6;
     public static boolean RegisterUser(String userName, String password, String confirmPassword){
         String validateMessage = ValidUser(userName, password, confirmPassword);
-        if(!validateMessage.equals(Messages.successMessage)){
+        if(!validateMessage.equals(Messages.loginSuccessMessage)){
             Popups.ShowPopup(validateMessage, JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -32,7 +32,7 @@ public class RegisterController {
         if(UserAlreadyExists(userName)){
             return Messages.usernameAlreadyExistsErrorMessage;
         }
-        return Messages.successMessage;
+        return Messages.loginSuccessMessage;
     }
 
     private static boolean UserAlreadyExists(String userName){

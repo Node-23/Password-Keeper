@@ -17,8 +17,11 @@ public class HomeView extends JFrame{
     private static final int usernameXPosition = 120;
     private static final int passwordXPosition = 365;
     private static final int columnsLabelTextSize = 15;
+    private static final int passwordDataAdjustYPosition = 40;
+    private static int passwordDataYPosition;
 
     public static void ShowHomeView(String username) {
+        passwordDataYPosition = 90;
         HomeView frame = new HomeView();
         frame.setTitle("Home");
         frame.setResizable(false);
@@ -58,6 +61,7 @@ public class HomeView extends JFrame{
 
         //Set Listeners
         logout.addActionListener(v -> {frame.setVisible(false); LoginView.ShowLoginView();});
+        addPassword.addActionListener(v -> {frame.setVisible(false); CreatePasswordView.ShowCreatePasswordView(username, frame);});
 
         frame.setJMenuBar(menuBar);
         frame.add(titleLabel);
@@ -65,7 +69,6 @@ public class HomeView extends JFrame{
         frame.add(usernameLabel);
         frame.add(passwordLabel);
 
-        //setEachPasswordItems(frame, null);
         GetAllUserPasswords(username, frame);
 
         frame.setSize(650, 600);
@@ -82,9 +85,9 @@ public class HomeView extends JFrame{
         JButton editBt = new JButton("EDIT");
         JButton deleteBt = new JButton("DELETE");
 
-        fromListLabel.setBounds(fromXPosition, 90, 90, 30);
-        usernameListLabel.setBounds(usernameXPosition, 90, 200, 30);
-        passwordListLabel.setBounds(passwordXPosition, 90, 120, 30);
+        fromListLabel.setBounds(fromXPosition, passwordDataYPosition, 90, 30);
+        usernameListLabel.setBounds(usernameXPosition, passwordDataYPosition, 200, 30);
+        passwordListLabel.setBounds(passwordXPosition, passwordDataYPosition, 120, 30);
 
         SetButtons(editBt, editButtonColor, 480, 60);
         SetButtons(deleteBt, deleteButtonColor, 550, 75);
@@ -101,7 +104,7 @@ public class HomeView extends JFrame{
         button.setBackground(Color.decode(buttonColor));
         button.setFocusPainted(false);
         button.setForeground(Color.WHITE);
-        button.setBounds(buttonXPosition, 90, buttonWidth, 30);
+        button.setBounds(buttonXPosition, passwordDataYPosition, buttonWidth, 30);
 
         if(Objects.equals(button.getText(), "EDIT")){
             button.addActionListener(v -> {
@@ -119,6 +122,7 @@ public class HomeView extends JFrame{
         if(data == null) return;
         data.forEach(pass -> {
             setEachPasswordItems(frame, pass);
+            passwordDataYPosition += passwordDataAdjustYPosition;
         });
     }
 }
