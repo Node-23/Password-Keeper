@@ -53,7 +53,7 @@ public class LoginView extends JFrame{
                 return;
             }
             frame.setVisible(false);
-            HomeView.ShowHomeView();
+            HomeView.ShowHomeView(user.getUsername());
         });
 
         frame.add(titleLabel);

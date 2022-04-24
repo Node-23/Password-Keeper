@@ -44,7 +44,7 @@ public class CreatePasswordView extends JFrame {
 
         cancelBt.addActionListener(v->{
             frame.setVisible(false);
-            HomeView.ShowHomeView();
+            HomeView.ShowHomeView("test");
         });
 
         frame.add(titleLabel);
