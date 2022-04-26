@@ -6,6 +6,7 @@ import Service.FIleIO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -82,21 +83,51 @@ public class HomeView extends JFrame{
         JLabel fromListLabel = new JLabel(pass.getFrom());
         JLabel usernameListLabel = new JLabel(pass.getUsername());
         JLabel passwordListLabel = new JLabel(pass.getPassword());
+
+        JLabel hidePasswordLabel = new JLabel(HidePasswordLabelText(pass.getPassword().length()));
         JButton editBt = new JButton("EDIT");
         JButton deleteBt = new JButton("DELETE");
 
         fromListLabel.setBounds(fromXPosition, passwordDataYPosition, 90, 30);
         usernameListLabel.setBounds(usernameXPosition, passwordDataYPosition, 200, 30);
         passwordListLabel.setBounds(passwordXPosition, passwordDataYPosition, 120, 30);
+        hidePasswordLabel.setBounds(passwordXPosition, passwordDataYPosition, 120, 30);
 
         SetButtons(editBt, editButtonColor, 480, 60);
         SetButtons(deleteBt, deleteButtonColor, 550, 75);
 
+        passwordListLabel.setVisible(false);
+        hidePasswordLabel.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent arg0) {
+                hidePasswordLabel.setVisible(false);
+                passwordListLabel.setVisible(true);
+            }
+            public void mouseExited(MouseEvent arg0) {
+
+                int delay = 1000;
+                Timer timer = new Timer( delay, e -> {
+                    hidePasswordLabel.setVisible(true);
+                    passwordListLabel.setVisible(false);
+                } );
+                timer.setRepeats( false );//make sure the timer only runs once
+                timer.start();
+            }
+        });
+
         frame.add(fromListLabel);
         frame.add(usernameListLabel);
         frame.add(passwordListLabel);
+        frame.add(hidePasswordLabel);
         frame.add(editBt);
         frame.add(deleteBt);
+    }
+
+    private static String HidePasswordLabelText(int lenght){
+        String text = "";
+        for (int i = 0; i < lenght; i++) {
+            text += "■";
+        }
+        return text;
     }
 
     private static void SetButtons(JButton button, String buttonColor, int buttonXPosition, int buttonWidth){
