@@ -22,8 +22,6 @@ public class CreatePasswordController {
 
     protected static boolean PasswordAlreadyExists(String username, Password password){
         ArrayList<Password> data = FIleIO.GetUserPasswords(username);
-        if(data == null) return false;
-
         return data.stream().anyMatch(pass ->
                 pass.getFrom().equals(password.getFrom()) &&
                 pass.getUsername().equals(password.getUsername()) &&

@@ -18,7 +18,7 @@ public class FIleIO {
 
     private static void SaveFile(String data, String filePath, String fileName){
         CreateFolderIfNeeded(filePath);
-        FileOutputStream outputStream = null;
+        FileOutputStream outputStream;
         try {
             outputStream = new FileOutputStream(filePath + File.separator + fileName);
             byte[] strToBytes = data.getBytes();
@@ -96,19 +96,23 @@ public class FIleIO {
         SaveFile(data, userFolder, userPasswordsFileName);
     }
 
+    public static void RemoveUserPassword(String username, ArrayList<Password> userData){
+        String userFolder = mainFolderPath + username;
+        StringBuilder stringData = new StringBuilder();
+        for (Password data: userData) {
+            stringData.append(data.toString()).append("\n");
+        }
+        SaveFile(stringData.toString(), userFolder, userPasswordsFileName);
+    }
+
     public static ArrayList<Password> GetUserPasswords(String username){
-        try{
-        String[] stringData = ReadFile(mainFolderPath + username + File.separator + userPasswordsFileName).split("\n");
+        String[] stringData = Objects.requireNonNull(ReadFile(mainFolderPath + username + File.separator + userPasswordsFileName)).split("\n");
         ArrayList<Password> data = new ArrayList<>();
         Arrays.stream(stringData).forEach(sd -> {
             Password pass = new Password(sd.split("-")[0], sd.split("-")[1], sd.split("-")[2]);
             data.add(pass);
         });
         return data;
-
-        } catch (Exception e) {
-            return null;
-        }
     }
 
 }

@@ -30,4 +30,9 @@ public class Password {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return getFrom() + "-" + getUsername() + "-" + getPassword();
+    }
 }

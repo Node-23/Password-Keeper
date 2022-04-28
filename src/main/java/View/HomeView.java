@@ -1,7 +1,6 @@
 package View;
 
 import Model.Password;
-import Model.User;
 import Service.FIleIO;
 
 import javax.swing.*;
@@ -20,10 +19,12 @@ public class HomeView extends JFrame{
     private static final int columnsLabelTextSize = 15;
     private static final int passwordDataAdjustYPosition = 40;
     private static int passwordDataYPosition;
+    private static ArrayList<Password> userData;
+    private static HomeView frame;
 
     public static void ShowHomeView(String username) {
         passwordDataYPosition = 90;
-        HomeView frame = new HomeView();
+        frame = new HomeView();
         frame.setTitle("Home");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,7 +79,7 @@ public class HomeView extends JFrame{
         frame.setVisible(true);
     }
 
-    private static void setEachPasswordItems(HomeView frame, Password pass){
+    private static void setEachPasswordItems(HomeView frame, String userName, Password pass){
         //HERE WE WILL RECEIVE A PASSWORD OBJECT AND SET IT ON THE FRAME
         JLabel fromListLabel = new JLabel(pass.getFrom());
         JLabel usernameListLabel = new JLabel(pass.getUsername());
@@ -93,8 +94,8 @@ public class HomeView extends JFrame{
         passwordListLabel.setBounds(passwordXPosition, passwordDataYPosition, 120, 30);
         hidePasswordLabel.setBounds(passwordXPosition, passwordDataYPosition, 120, 30);
 
-        SetButtons(editBt, editButtonColor, 480, 60);
-        SetButtons(deleteBt, deleteButtonColor, 550, 75);
+        SetButtons(editBt, userName, pass, editButtonColor, 480, 60);
+        SetButtons(deleteBt, userName, pass, deleteButtonColor, 550, 75);
 
         passwordListLabel.setVisible(false);
         hidePasswordLabel.addMouseListener(new MouseAdapter() {
@@ -122,15 +123,11 @@ public class HomeView extends JFrame{
         frame.add(deleteBt);
     }
 
-    private static String HidePasswordLabelText(int lenght){
-        String text = "";
-        for (int i = 0; i < lenght; i++) {
-            text += "■";
-        }
-        return text;
+    private static String HidePasswordLabelText(int length){
+        return "■".repeat(Math.max(0, length));
     }
 
-    private static void SetButtons(JButton button, String buttonColor, int buttonXPosition, int buttonWidth){
+    private static void SetButtons(JButton button,String userName, Password pass ,String buttonColor, int buttonXPosition, int buttonWidth){
         button.setFont(new Font(Font.DIALOG, Font.BOLD, 10));
         button.setBackground(Color.decode(buttonColor));
         button.setFocusPainted(false);
@@ -143,16 +140,18 @@ public class HomeView extends JFrame{
             });
         }else{
             button.addActionListener(v -> {
-                //TODO: Add the delete password action
+                userData.remove(pass);
+                FIleIO.RemoveUserPassword(userName, userData);
+                frame.dispose();
+                HomeView.ShowHomeView(userName);
             });
         }
     }
 
     private static void GetAllUserPasswords(String username, HomeView frame){
-        ArrayList<Password> data = FIleIO.GetUserPasswords(username);
-        if(data == null) return;
-        data.forEach(pass -> {
-            setEachPasswordItems(frame, pass);
+        userData = FIleIO.GetUserPasswords(username);
+        userData.forEach(pass -> {
+            setEachPasswordItems(frame, username, pass);
             passwordDataYPosition += passwordDataAdjustYPosition;
         });
     }
