@@ -60,13 +60,13 @@ public class UserPasswordView extends JFrame {
                 Password password = new Password(fromTextField.getText(), usernameTextField.getText(), String.valueOf(passwordTextField.getPassword()));
                 if(UserPasswordController.AddUserData(username, password)){
                     frame.dispose();
-                    HomeView.ShowHomeView(username);
+                    HomeView.ResetFrame(username);
                 }
         });
 
         cancelBt.addActionListener(v->{
             frame.dispose();
-            HomeView.resetFrame(username);
+            HomeView.ResetFrame(username);
         });
 
         frame.add(titleLabel);
@@ -113,7 +113,7 @@ public class UserPasswordView extends JFrame {
                     data.setPassword(String.valueOf(passwordTextField.getPassword()));
                     if(UserPasswordController.EditUserData(username, data, UserDataToString(userData))){
                         frame.dispose();
-                        HomeView.resetFrame(username);
+                        HomeView.ResetFrame(username);
                     }
                 }
             }

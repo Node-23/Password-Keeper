@@ -2,6 +2,7 @@ package View;
 
 import Model.Password;
 import Service.FIleIO;
+import Service.Messages;
 
 import javax.swing.*;
 import java.awt.*;
@@ -141,22 +142,28 @@ public class HomeView extends JFrame{
             });
         }else{
             button.addActionListener(v -> {
-                userData.remove(pass);
-                FIleIO.RemoveUserPassword(userName, userData);
-                resetFrame(userName);
+                //0 - YES, 1- NO
+                int response = JOptionPane.showConfirmDialog(null, Messages.ConfirmDeleteMessage,
+                        "Delete password", JOptionPane.YES_NO_OPTION);
+                if(response == 0){
+                    userData.remove(pass);
+                    FIleIO.RemoveUserPassword(userName, userData);
+                    ResetFrame(userName);
+                }
             });
         }
     }
 
     private static void GetAllUserPasswords(String username, HomeView frame){
         userData = FIleIO.GetUserPasswords(username);
+        if(userData == null) return;
         userData.forEach(pass -> {
             setEachPasswordItems(frame, username, pass);
             passwordDataYPosition += passwordDataAdjustYPosition;
         });
     }
 
-    public static void resetFrame(String userName){
+    public static void ResetFrame(String userName){
         frame.dispose();
         HomeView.ShowHomeView(userName);
     }
