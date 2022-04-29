@@ -62,8 +62,8 @@ public class HomeView extends JFrame{
         passwordLabel.setBounds(passwordXPosition, 55, 200, 30);
 
         //Set Listeners
-        logout.addActionListener(v -> {frame.setVisible(false); LoginView.ShowLoginView();});
-        addPassword.addActionListener(v -> {frame.setVisible(false); CreatePasswordView.ShowCreatePasswordView(username, frame);});
+        logout.addActionListener(v -> {frame.dispose(); LoginView.ShowLoginView();});
+        addPassword.addActionListener(v -> {frame.setEnabled(false); UserPasswordView.CreatePassword(username);});
 
         frame.setJMenuBar(menuBar);
         frame.add(titleLabel);
@@ -136,14 +136,14 @@ public class HomeView extends JFrame{
 
         if(Objects.equals(button.getText(), "EDIT")){
             button.addActionListener(v -> {
-                //TODO: Add the edit password action
+                frame.setEnabled(false);
+                UserPasswordView.EditPassword(userName, userData, pass);
             });
         }else{
             button.addActionListener(v -> {
                 userData.remove(pass);
                 FIleIO.RemoveUserPassword(userName, userData);
-                frame.dispose();
-                HomeView.ShowHomeView(userName);
+                resetFrame(userName);
             });
         }
     }
@@ -154,5 +154,10 @@ public class HomeView extends JFrame{
             setEachPasswordItems(frame, username, pass);
             passwordDataYPosition += passwordDataAdjustYPosition;
         });
+    }
+
+    public static void resetFrame(String userName){
+        frame.dispose();
+        HomeView.ShowHomeView(userName);
     }
 }

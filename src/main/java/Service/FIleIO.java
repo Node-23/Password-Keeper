@@ -96,6 +96,11 @@ public class FIleIO {
         SaveFile(data, userFolder, userPasswordsFileName);
     }
 
+    public static void EditUserPassword(String username, String data){
+        String userFolder = mainFolderPath + username;
+        SaveFile(data, userFolder, userPasswordsFileName);
+    }
+
     public static void RemoveUserPassword(String username, ArrayList<Password> userData){
         String userFolder = mainFolderPath + username;
         StringBuilder stringData = new StringBuilder();

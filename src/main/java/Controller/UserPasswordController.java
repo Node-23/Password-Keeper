@@ -8,7 +8,7 @@ import Service.Popups;
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class CreatePasswordController {
+public class UserPasswordController {
 
     public static boolean AddUserData(String username, Password pass){
         if(PasswordAlreadyExists(username, pass)){
@@ -16,7 +16,17 @@ public class CreatePasswordController {
             return false;
         }
         FIleIO.AddUserPassword(username, pass);
-        Popups.ShowPopup(Messages.passwordSuccessMessage, JOptionPane.PLAIN_MESSAGE);
+        Popups.ShowPopup(Messages.passwordCreatedMessage, JOptionPane.PLAIN_MESSAGE);
+        return true;
+    }
+
+    public static boolean EditUserData(String username, Password pass, String data){
+        if(PasswordAlreadyExists(username, pass)){
+            Popups.ShowPopup(Messages.dataAlreadyExistsErrorMessage, JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        FIleIO.EditUserPassword(username, data);
+        Popups.ShowPopup(Messages.passwordEditedMessage, JOptionPane.PLAIN_MESSAGE);
         return true;
     }
 

@@ -58,7 +58,7 @@ public class RegisterView extends JFrame{
         });
 
         cancelBt.addActionListener(v->{
-            frame.setVisible(false);
+            frame.dispose();
             LoginView.ShowLoginView();
         });
 
