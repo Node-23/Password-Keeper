@@ -1,5 +1,7 @@
 package Service;
 
+import java.awt.*;
+
 public class Messages {
     public static final String loginErrorMessage = "Incorrect username or password";
     public static final String passwordNotMatchErrorMessage = "Passwords not match";
@@ -10,4 +12,5 @@ public class Messages {
     public static final String passwordCreatedMessage = "Password created successfully";
     public static final String passwordEditedMessage = "Password edited successfully";
     public static final String EmptyFieldErrorMessage = "All fields must be filled";
+    public static final String ConfirmDeleteMessage = "This item will be deleted.\n Are you sure about that?";
 }
