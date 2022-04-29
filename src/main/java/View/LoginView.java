@@ -11,7 +11,6 @@ import java.awt.*;
 import static Service.Messages.loginErrorMessage;
 
 public class LoginView extends JFrame{
-    private static final String EmptyFieldErrorMessage = "All fields must be filled";
 
     public static void ShowLoginView() {
         LoginView frame = new LoginView();
@@ -38,13 +37,13 @@ public class LoginView extends JFrame{
         registerBt.setBounds(200, 160, 100, 30);
 
         registerBt.addActionListener(v->{
-            frame.setVisible(false);
+            frame.dispose();
             RegisterView.ShowRegisterView();
         });
 
         loginBt.addActionListener(v->{
             if(usernameField.getText().isBlank() || String.valueOf(passwordField.getPassword()).isBlank()){
-                Popups.ShowPopup(EmptyFieldErrorMessage, JOptionPane.ERROR_MESSAGE);
+                Popups.ShowPopup(Messages.EmptyFieldErrorMessage, JOptionPane.ERROR_MESSAGE);
                 return;
             }
             User user = new User(usernameField.getText(), String.valueOf(passwordField.getPassword()));
@@ -52,7 +51,7 @@ public class LoginView extends JFrame{
                 Popups.ShowPopup(Messages.loginErrorMessage, JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            frame.setVisible(false);
+            frame.dispose();
             HomeView.ShowHomeView(user.getUsername());
         });
 

@@ -42,7 +42,7 @@ public class EditPasswordView extends JFrame {
         cancelBt.setForeground(Color.white);
 
         cancelBt.addActionListener(v->{
-            frame.setVisible(false);
+            frame.dispose();
             HomeView.ShowHomeView("test");
         });
 
