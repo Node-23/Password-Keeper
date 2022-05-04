@@ -2,6 +2,7 @@ package View;
 
 import Controller.LoginController;
 import Model.User;
+import Service.ConfigurationStrings;
 import Service.Messages;
 import Service.Popups;
 
@@ -35,6 +36,12 @@ public class LoginView extends JFrame{
         passwordField.setBounds(100, 110, 200, 30);
         loginBt.setBounds(25, 160, 100, 30);
         registerBt.setBounds(200, 160, 100, 30);
+
+        loginBt.setBackground(Color.decode(ConfigurationStrings.registerButtonColor));
+        loginBt.setForeground(Color.WHITE);
+
+        registerBt.setBackground(Color.decode(ConfigurationStrings.editButtonColor));
+        registerBt.setForeground(Color.WHITE);
 
         registerBt.addActionListener(v->{
             frame.dispose();

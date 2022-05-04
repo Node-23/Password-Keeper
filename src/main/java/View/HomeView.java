@@ -1,6 +1,7 @@
 package View;
 
 import Model.Password;
+import Service.ConfigurationStrings;
 import Service.FIleIO;
 import Service.Messages;
 
@@ -12,8 +13,6 @@ import java.util.Objects;
 
 public class HomeView extends JFrame{
 
-    private static final String editButtonColor = "#f4c430";
-    private static final String deleteButtonColor = "#e32636";
     private static final int fromXPosition = 10;
     private static final int usernameXPosition = 120;
     private static final int passwordXPosition = 365;
@@ -64,7 +63,7 @@ public class HomeView extends JFrame{
 
         //Set Listeners
         logout.addActionListener(v -> {frame.dispose(); LoginView.ShowLoginView();});
-        addPassword.addActionListener(v -> {frame.setEnabled(false); UserPasswordView.CreatePassword(username);});
+        addPassword.addActionListener(v -> {frame.setEnabled(false); UserCreateOrEditPasswordView.CreatePassword(username);});
 
         frame.setJMenuBar(menuBar);
         frame.add(titleLabel);
@@ -95,8 +94,8 @@ public class HomeView extends JFrame{
         passwordListLabel.setBounds(passwordXPosition, passwordDataYPosition, 120, 30);
         hidePasswordLabel.setBounds(passwordXPosition, passwordDataYPosition, 120, 30);
 
-        SetButtons(editBt, userName, pass, editButtonColor, 480, 60);
-        SetButtons(deleteBt, userName, pass, deleteButtonColor, 550, 75);
+        SetButtons(editBt, userName, pass, ConfigurationStrings.editButtonColor, 480, 60);
+        SetButtons(deleteBt, userName, pass, ConfigurationStrings.deleteButtonColor, 550, 75);
 
         passwordListLabel.setVisible(false);
         hidePasswordLabel.addMouseListener(new MouseAdapter() {
@@ -138,7 +137,7 @@ public class HomeView extends JFrame{
         if(Objects.equals(button.getText(), "EDIT")){
             button.addActionListener(v -> {
                 frame.setEnabled(false);
-                UserPasswordView.EditPassword(userName, userData, pass);
+                UserCreateOrEditPasswordView.EditPassword(userName, userData, pass);
             });
         }else{
             button.addActionListener(v -> {

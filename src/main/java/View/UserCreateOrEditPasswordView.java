@@ -2,6 +2,7 @@ package View;
 
 import Controller.UserPasswordController;
 import Model.Password;
+import Service.ConfigurationStrings;
 import Service.Messages;
 import Service.Popups;
 
@@ -10,15 +11,15 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class UserPasswordView extends JFrame {
+public class UserCreateOrEditPasswordView extends JFrame {
     private static JTextField fromTextField;
     private static JTextField usernameTextField;
     private static JPasswordField passwordTextField;
     private static JButton registerBt;
-    private static UserPasswordView frame;
+    private static UserCreateOrEditPasswordView frame;
 
     private static void ShowCreatePasswordView(String username) {
-        frame = new UserPasswordView();
+        frame = new UserCreateOrEditPasswordView();
         frame.setTitle("Create Password");
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -47,10 +48,10 @@ public class UserPasswordView extends JFrame {
         registerBt.setBounds(25, 200, 100, 30);
         cancelBt.setBounds(200, 200, 100, 30);
 
-        registerBt.setBackground(Color.decode("#008000"));
+        registerBt.setBackground(Color.decode(ConfigurationStrings.registerButtonColor));
         registerBt.setForeground(Color.WHITE);
 
-        cancelBt.setBackground(Color.decode("#e61919"));
+        cancelBt.setBackground(Color.decode(ConfigurationStrings.cancelButtonColor));
         cancelBt.setForeground(Color.white);
 
             registerBt.addActionListener(v -> {
@@ -120,9 +121,13 @@ public class UserPasswordView extends JFrame {
         });
     }
 
-    private static boolean ValidateInputs(String from, String username, String Password){
-        if(from.isBlank() || username.isBlank() || Password.isBlank()){
+    private static boolean ValidateInputs(String from, String username, String password){
+        if(from.isBlank() || username.isBlank() || password.isBlank()){
             Popups.ShowPopup(Messages.EmptyFieldErrorMessage, JOptionPane.ERROR_MESSAGE);
+            return true;
+        }
+        if(from.contains(" ") || username.contains(" ")|| password.contains(" ")){
+            Popups.ShowPopup(Messages.UsernameOrPasswordSpaceCharacterErrorMessage, JOptionPane.ERROR_MESSAGE);
             return true;
         }
         return false;
@@ -131,7 +136,7 @@ public class UserPasswordView extends JFrame {
     private static String UserDataToString(ArrayList<Password> userData){
         StringBuilder userDataString = new StringBuilder();
         for (Password data: userData) {
-            userDataString.append(data.toString()).append("\n");
+            userDataString.append(data.toString()).append(ConfigurationStrings.itemsDataSeparator);
         }
         return userDataString.toString();
     }

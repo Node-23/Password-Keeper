@@ -1,5 +1,7 @@
 package View;
 
+import Service.ConfigurationStrings;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -35,10 +37,10 @@ public class EditPasswordView extends JFrame {
         registerBt.setBounds(25, 200, 100, 30);
         cancelBt.setBounds(200, 200, 100, 30);
 
-        registerBt.setBackground(Color.decode("#008000"));
+        registerBt.setBackground(Color.decode(ConfigurationStrings.registerButtonColor));
         registerBt.setForeground(Color.WHITE);
 
-        cancelBt.setBackground(Color.decode("#e61919"));
+        cancelBt.setBackground(Color.decode(ConfigurationStrings.cancelButtonColor));
         cancelBt.setForeground(Color.white);
 
         cancelBt.addActionListener(v->{
