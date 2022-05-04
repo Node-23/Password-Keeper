@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.User;
+import Service.ConfigurationStrings;
 import Service.FIleIO;
 import Service.Messages;
 import Service.Popups;
@@ -29,14 +30,18 @@ public class RegisterController {
         if(!password.equals(confirmPassword)){
             return Messages.passwordNotMatchErrorMessage;
         }
+        if(userName.contains(" ") || password.contains(" ")){
+            return Messages.UsernameOrPasswordSpaceCharacterErrorMessage;
+        }
         if(UserAlreadyExists(userName)){
             return Messages.usernameAlreadyExistsErrorMessage;
         }
+
         return Messages.loginSuccessMessage;
     }
 
     private static boolean UserAlreadyExists(String userName){
         ArrayList<String> data = FIleIO.GetUsersData();
-        return data.stream().anyMatch(d -> d.split("-")[0].equals(userName));
+        return data.stream().anyMatch(d -> d.split(ConfigurationStrings.itemsSeparator)[0].equals(userName));
     }
 }

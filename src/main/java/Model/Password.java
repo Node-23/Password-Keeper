@@ -1,5 +1,7 @@
 package Model;
 
+import Service.ConfigurationStrings;
+
 public class Password {
     private final String from;
     private String username;
@@ -33,6 +35,6 @@ public class Password {
 
     @Override
     public String toString() {
-        return getFrom() + "-" + getUsername() + "-" + getPassword();
+        return getFrom() + ConfigurationStrings.itemsSeparator + getUsername() + ConfigurationStrings.itemsSeparator + getPassword();
     }
 }
