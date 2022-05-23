@@ -46,4 +46,16 @@ class RegisterControllerTest {
         );
         assertEquals(Messages.usernameAlreadyExistsErrorMessage,answer);
     }
+
+    @Test
+    void UserAlreadyExistsPositiveTest() {
+        boolean result = RegisterController.UserAlreadyExists("default");
+        assertTrue(result);
+    }
+
+    @Test
+    void UserAlreadyExistsNegativeTest() {
+        boolean result = RegisterController.UserAlreadyExists("484884847578757");
+        assertFalse(result);
+    }
 }
