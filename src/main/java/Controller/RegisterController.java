@@ -40,7 +40,7 @@ public class RegisterController {
         return Messages.loginSuccessMessage;
     }
 
-    private static boolean UserAlreadyExists(String userName){
+    protected static boolean UserAlreadyExists(String userName){
         ArrayList<String> data = FIleIO.GetUsersData();
         return data.stream().anyMatch(d -> d.split(ConfigurationStrings.itemsSeparator)[0].equals(userName));
     }
