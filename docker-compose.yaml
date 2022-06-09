@@ -1,12 +1,12 @@
 version: "3.8"
 services:
-    db:
+    postgres:
       image: postgres
       container_name: postgres
       environment:
+        POSTGRES_DB: password_keeper
         POSTGRES_USER: admin
         POSTGRES_PASSWORD: admin
-        POSTGRES_DB: password_keeper
       ports:
         - "5432:5432"
       volumes:
