@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Password;
-import Service.DataBase.DBQueries;
 import Service.FIleIO;
 import Service.Messages;
 import Service.Popups;
