@@ -1,13 +1,13 @@
 package Controller;
 
 import Model.Password;
+import Service.DataBase.DBQueries;
 import Service.FIleIO;
 import Service.Messages;
 import Service.Popups;
 
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class UserPasswordController {
 
@@ -16,9 +16,13 @@ public class UserPasswordController {
             Popups.ShowPopup(Messages.dataAlreadyExistsErrorMessage, JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        FIleIO.AddUserPassword(username, pass);
-        Popups.ShowPopup(Messages.passwordCreatedMessage, JOptionPane.PLAIN_MESSAGE);
-        return true;
+        //boolean result = DBQueries.AddPassword(userId, pass.getLocalPasswordIsFrom(), pass.getPassword());
+        //if(result){
+            FIleIO.AddUserPassword(username, pass);
+            Popups.ShowPopup(Messages.passwordCreatedMessage, JOptionPane.PLAIN_MESSAGE);
+            return true;
+        //}
+        //return false;
     }
 
     public static boolean EditUserData(String username, Password pass, String data){
@@ -35,7 +39,7 @@ public class UserPasswordController {
         ArrayList<Password> data = FIleIO.GetUserPasswords(username);
         if(data == null) return false;
         return data.stream().anyMatch(pass ->
-                pass.getFrom().equalsIgnoreCase(password.getFrom()) &&
+                pass.getLocalPasswordIsFrom().equalsIgnoreCase(password.getLocalPasswordIsFrom()) &&
                 pass.getUsername().equals(password.getUsername()) &&
                 pass.getPassword().equals(password.getPassword())
         );

@@ -81,7 +81,7 @@ public class HomeView extends JFrame{
 
     private static void setEachPasswordItems(HomeView frame, String userName, Password pass){
         //HERE WE WILL RECEIVE A PASSWORD OBJECT AND SET IT ON THE FRAME
-        JLabel fromListLabel = new JLabel(pass.getFrom());
+        JLabel fromListLabel = new JLabel(pass.getLocalPasswordIsFrom());
         JLabel usernameListLabel = new JLabel(pass.getUsername());
         JLabel passwordListLabel = new JLabel(pass.getPassword());
 

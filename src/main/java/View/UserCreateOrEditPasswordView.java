@@ -92,7 +92,7 @@ public class UserCreateOrEditPasswordView extends JFrame {
 
     public static void EditPassword(String username, ArrayList<Password> userData, Password password){
         ShowCreatePasswordView(username);
-        fromTextField.setText(password.getFrom());
+        fromTextField.setText(password.getLocalPasswordIsFrom());
         fromTextField.setEnabled(false);
         usernameTextField.setText(password.getUsername());
         passwordTextField.setText(password.getPassword());

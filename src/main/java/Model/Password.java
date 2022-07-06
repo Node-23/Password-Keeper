@@ -3,18 +3,27 @@ package Model;
 import Service.ConfigurationStrings;
 
 public class Password {
-    private final String from;
+    private long id;
+    private long userId;
+    private final String localPasswordIsFrom;
     private String username;
     private String password;
 
     public Password(String from, String username, String password) {
-        this.from = from;
+        this.localPasswordIsFrom = from;
         this.username = username;
         this.password = password;
     }
 
-    public String getFrom() {
-        return from;
+    public Password(long id, String from, String username, String password) {
+        this.id = id;
+        this.localPasswordIsFrom = from;
+        this.username = username;
+        this.password = password;
+    }
+
+    public String getLocalPasswordIsFrom() {
+        return localPasswordIsFrom;
     }
 
     public String getUsername() {
@@ -35,6 +44,22 @@ public class Password {
 
     @Override
     public String toString() {
-        return getFrom() + ConfigurationStrings.itemsSeparator + getUsername() + ConfigurationStrings.itemsSeparator + getPassword();
+        return getLocalPasswordIsFrom() + ConfigurationStrings.itemsSeparator + getUsername() + ConfigurationStrings.itemsSeparator + getPassword();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

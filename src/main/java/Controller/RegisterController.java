@@ -2,6 +2,7 @@ package Controller;
 
 import Model.User;
 import Service.ConfigurationStrings;
+import Service.DataBase.DBQueries;
 import Service.FIleIO;
 import Service.Messages;
 import Service.Popups;
@@ -17,10 +18,19 @@ public class RegisterController {
             Popups.ShowPopup(validateMessage, JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        User user = new User(userName, password);
-        FIleIO.AddUserDataInConfig(user.getUsername(), user.getPassword());
-        Popups.ShowPopup(validateMessage, JOptionPane.PLAIN_MESSAGE);
-        return true;
+        boolean result = DBQueries.AddUser(userName, password);
+        if(result){
+            long userId = DBQueries.GetUserId(userName);
+            if(userId == -1){
+                //TODO: Remove user in DB if not found the id
+                return false;
+            }
+            User user = new User(userName, password);
+            FIleIO.AddUserDataInConfig(user.getUsername(), user.getPassword());
+            Popups.ShowPopup(validateMessage, JOptionPane.PLAIN_MESSAGE);
+            return true;
+        }
+        return false;
     }
 
     protected static String ValidUser(String userName, String password, String confirmPassword){

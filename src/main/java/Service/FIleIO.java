@@ -92,7 +92,7 @@ public class FIleIO {
         if(data == null) {
             data = "";
         }
-        data += pass.getFrom() + ConfigurationStrings.itemsSeparator + pass.getUsername() + ConfigurationStrings.itemsSeparator + pass.getPassword();
+        data += pass.getLocalPasswordIsFrom() + ConfigurationStrings.itemsSeparator + pass.getUsername() + ConfigurationStrings.itemsSeparator + pass.getPassword();
         SaveFile(data, userFolder, userPasswordsFileName);
     }
 
