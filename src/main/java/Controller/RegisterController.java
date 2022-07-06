@@ -2,7 +2,8 @@ package Controller;
 
 import Model.User;
 import Service.ConfigurationStrings;
-import Service.DataBase.DBQueries;
+import Service.DataBase.DBCRUD;
+import Service.DataBase.DBGenericFunctions;
 import Service.FIleIO;
 import Service.Messages;
 import Service.Popups;
@@ -18,9 +19,9 @@ public class RegisterController {
             Popups.ShowPopup(validateMessage, JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        boolean result = DBQueries.AddUser(userName, password);
+        boolean result = DBCRUD.AddUser(userName, password);
         if(result){
-            long userId = DBQueries.GetUserId(userName);
+            long userId = DBGenericFunctions.GetUserId(userName);
             if(userId == -1){
                 //TODO: Remove user in DB if not found the id
                 return false;
