@@ -2,8 +2,7 @@ package Controller;
 
 import Model.User;
 import Service.ConfigurationStrings;
-import Service.DataBase.DBCRUD;
-import Service.DataBase.DBGenericFunctions;
+import Service.DataBase.DBUserCRUD;
 import Service.FIleIO;
 import Service.Messages;
 import Service.Popups;
@@ -19,14 +18,14 @@ public class RegisterController {
             Popups.ShowPopup(validateMessage, JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        boolean result = DBCRUD.AddUser(userName, password);
+        boolean result = DBUserCRUD.AddUser(userName, password);
         if(result){
-            long userId = DBGenericFunctions.GetUserId(userName);
+            long userId = DBUserCRUD.GetUserId(userName);
             if(userId == -1){
                 //TODO: Remove user in DB if not found the id
                 return false;
             }
-            User user = new User(userName, password);
+            User user = new User(userId, userName, password);
             FIleIO.AddUserDataInConfig(user.getUsername(), user.getPassword());
             Popups.ShowPopup(validateMessage, JOptionPane.PLAIN_MESSAGE);
             return true;
@@ -53,6 +52,6 @@ public class RegisterController {
 
     protected static boolean UserAlreadyExists(String userName){
         ArrayList<String> data = FIleIO.GetUsersData();
-        return data.stream().anyMatch(d -> d.split(ConfigurationStrings.itemsSeparator)[0].equals(userName));
+        return data.stream().anyMatch(d -> d.split(ConfigurationStrings.dataSeparator)[0].equals(userName));
     }
 }

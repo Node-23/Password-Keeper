@@ -76,7 +76,7 @@ public class FIleIO {
 
     public static void AddUserDataInConfig(String username, String password){
         String data = ReadFile(mainFolderPath + configData);
-        data += username + ConfigurationStrings.itemsSeparator + password;
+        data += username + ConfigurationStrings.dataSeparator + password;
         SaveFile(data, mainFolderPath, configData);
     }
 
@@ -92,7 +92,7 @@ public class FIleIO {
         if(data == null) {
             data = "";
         }
-        data += pass.getLocalPasswordIsFrom() + ConfigurationStrings.itemsSeparator + pass.getUsername() + ConfigurationStrings.itemsSeparator + pass.getPassword();
+        data += pass.getLocalPasswordIsFrom() + ConfigurationStrings.dataSeparator + pass.getUsername() + ConfigurationStrings.dataSeparator + pass.getPassword();
         SaveFile(data, userFolder, userPasswordsFileName);
     }
 
@@ -117,9 +117,9 @@ public class FIleIO {
         String[] stringData = stringFile.split(ConfigurationStrings.itemsDataSeparator);
         ArrayList<Password> data = new ArrayList<>();
         Arrays.stream(stringData).forEach(sd -> {
-            Password pass = new Password(sd.split(ConfigurationStrings.itemsSeparator)[0],
-                    sd.split(ConfigurationStrings.itemsSeparator)[1],
-                    sd.split(ConfigurationStrings.itemsSeparator)[2]);
+            Password pass = new Password(sd.split(ConfigurationStrings.dataSeparator)[0],
+                    sd.split(ConfigurationStrings.dataSeparator)[1],
+                    sd.split(ConfigurationStrings.dataSeparator)[2]);
             data.add(pass);
         });
         return data;

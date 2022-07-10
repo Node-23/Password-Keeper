@@ -44,7 +44,7 @@ public class Password {
 
     @Override
     public String toString() {
-        return getLocalPasswordIsFrom() + ConfigurationStrings.itemsSeparator + getUsername() + ConfigurationStrings.itemsSeparator + getPassword();
+        return getLocalPasswordIsFrom() + ConfigurationStrings.dataSeparator + getUsername() + ConfigurationStrings.dataSeparator + getPassword();
     }
 
     public long getId() {

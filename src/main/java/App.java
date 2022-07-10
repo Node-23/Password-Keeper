@@ -1,4 +1,5 @@
-import Service.DataBase.DBCRUD;
+import Service.DataBase.DBPasswordCRUD;
+import Service.DataBase.DBUserCRUD;
 import Service.DataBase.DBGenericFunctions;
 import Service.DataBase.DataBaseConnection;
 import Service.FIleIO;
@@ -9,10 +10,11 @@ public class App {
         FIleIO.CreateMainFolder();
         FIleIO.CreateAppConfig();
         DBGenericFunctions.connection = DataBaseConnection.connect();
-        DBCRUD.CreateUserTable();
-        DBCRUD.CreatePasswordsTable();
+        DBUserCRUD.CreateUserTable();
+        DBPasswordCRUD.CreatePasswordsTable();
         LoginView.ShowLoginView();
     }
+        //TODO: Add CI/CD
         //TODO: Create userDB tests
         //TODO: BUG: Container not storing DB data in volume
         //TODO: Remove file storage system
