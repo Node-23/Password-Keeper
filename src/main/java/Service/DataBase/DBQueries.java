@@ -12,8 +12,24 @@ public class DBQueries {
             " local_password_is_from           varchar(60)    NOT NULL, " +
             " password            varchar(60) NOT NULL) ";
 
+    protected static String GetUserQuery(String userName){
+        return "SELECT * FROM users WHERE user_name = " + "'" + userName + "'" + ";";
+    }
+
+    protected static String DeleteUserQuery(String userName){
+        return "DELETE FROM users WHERE user_name = " + "'" + userName + "'" + ";";
+    }
+
+    protected static String EditUserQuery(String userName, String newUserName, String newPassword){
+        return "UPDATE users " +
+        "SET user_name = " + "'" + newUserName + "', " +
+        "password = '" + newPassword + "' " +
+        "WHERE user_name = " + "'" + userName + "'" + ";";
+    }
+
+
     protected static String UserInsertionQuery(String username, String password){
-        return "INSERT INTO users(user_name,password) " + "VALUES (" + "'" + username + "'" + ", " + "'" + password + "'" + ");";
+        return "INSERT INTO users(user_name,password) VALUES ('" + username + "', " + "'" + password + "');";
     }
 
     protected static String PasswordInsertionQuery(long userId, String localPasswordIsFrom, String password){
